@@ -4,5 +4,5 @@ Version assembleur du compteur de caractères dans une chaine. (Réalisé pour l
 Le fichier a été écrit pour se compiler avec MASM pour Windows donc il faut compiler avec MASM32.
 ## Utilisation
 Vous pouvez l'utiliser en entrant la ligne suivante :
-`charcount *phrase avec ou non espaces*`
+`charcount phrase avec ou sans espaces`
 Ne mettez surtout pas la phrase entre quote, elles ne seront pas effacés mais comptés.
