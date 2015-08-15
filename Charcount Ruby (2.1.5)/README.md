@@ -4,5 +4,5 @@ Ce script est écrit et testé sous la version 2.1.5 de Ruby, il ne sera compati
 (Changement du comportement des chaines.)
 ## Utilisation
 Vous pouvez l'utiliser en entrant la ligne suivante :
-`ruby charcount.rb *phrase avec ou non espaces*`
+`ruby charcount.rb phrase avec ou sans espaces`
 Si vous avez peur de l'interpretation de la commandline envoyée à Ruby vous pouvez mettre la phrase entre quote.
