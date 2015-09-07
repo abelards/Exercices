@@ -1,18 +1,27 @@
-#encoding: utf-8
-#Initialisation du tableau de compte
-charcount = Array.new(127,0)
-#Préinitialisation des variable (pour que Ruby n'alloue pas ces variables à chaque tour de serviette)
-i = 0
-#Récupération de la phrase passé en argument
+# Récupération de la phrase passée en paramètre
 phrase = ARGV.join(' ')
-exit(1) if phrase.bytesize == 0 #>exit(EXIT_FAILURE)
-phrase.each_byte do |i|
-  charcount[i] += 1 if i < 128
-end
-#Afficage des résultats
-print("La phrase \"#{phrase}\" contient :\r\n")
-charcount.each_index do |i|
-  j = charcount[i]
-  print("#{j} '#{i.chr}'\r\n") if j > 0
-end
-exit(0)
+exit(1) if phrase.size == 0 # => exit(EXIT_FAILURE)
+
+# Je veux une structure qui à un caractère (la clé) associe un chiffre (la valeur).
+# C'est ce que font les Hash (avec les clés et valeurs que vous voulez).
+
+# Il se trouve que je veux faire des additions sur la valeur, je vais soit coder
+# "mets un 1 si je n'ai jamais vu ce caractère ou mets x + 1 si je trouve x",
+# soit me dire "quand on accède à une clé, on lui met forcément zéro dedans"
+# et `Hash.new {|cle_jamais_vue| valeur_a_donner }` fait exactement ça
+chars = Hash.new { 0 }
+
+# Et donc mon code est simple car au premier appel de `chars['x']`
+# je n'ai pas `chars['x'] == nil` mais `chars['x'] == 0`
+phrase.each_char { |c| chars[c] += 1 }
+
+# Tri par caractère présent (les absents ne sont même pas dans la hash)
+# `sort` prend en paramètre deux éléments et doit retourner -1 si a > b, +1 si b > a et 0 sinon
+# Parcourir une hash {a: 1, b:2} la transformera en [[:a, 1], [:b, 2]]
+# Du coup a et b sont des tableaux, `.first` pour la clé et `.last` pour la valeur
+# (je trie par ordre alphabétique, mais en remplaçant `first` par `last` je trierais par fréquence)
+puts chars.sort{|a,b| a.first <=> b.first }.map{|x|
+  "Le caractère [#{x.first}] est utilisé #{x.last} fois"
+}
+
+# Pas de exit(0) car c'est ce qui se fait de toutes façons quand tout va bien
